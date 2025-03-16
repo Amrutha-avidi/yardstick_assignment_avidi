@@ -20,6 +20,7 @@ export default function RecentTransactions() {
         const { data } = await axios.get("/api/recent-transactions");
         setRecentTransactions(data || []);
       } catch (error) {
+        console.log(error)
         toast.error("Failed to fetch recent transactions.");
       } finally {
         setLoading(false);
