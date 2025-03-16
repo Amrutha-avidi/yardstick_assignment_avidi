@@ -17,6 +17,8 @@ export async function GET() {
 
         return NextResponse.json({ totalExpenses: totalExpenses[0]?.totalAmount || 0 }, { status: 200 });
     } catch (error) {
+        console.log(error)
+
         return NextResponse.json({ error: "Failed to fetch total expenses." }, { status: 500 });
     }
 }

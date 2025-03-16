@@ -5,17 +5,20 @@ import { toast } from "sonner";
 import {
   LineChart,
   Line,
-  CartesianGrid,
   XAxis,
   YAxis,
-  Tooltip,
   ResponsiveContainer,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+type MonthlyExpense = {
+  month: string;
+  amount: number;
+};
+
 export default function TotalExpenses() {
-  const [monthlyExpenses, setMonthlyExpenses] = React.useState<any[]>([]);
-  const [totalExpenses, setTotalExpenses] = React.useState<number | 0>(0);
+  const [monthlyExpenses, setMonthlyExpenses] = React.useState<MonthlyExpense[]>([]);
+  const [totalExpenses, setTotalExpenses] = React.useState<number>(0);
   const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
@@ -24,11 +27,12 @@ export default function TotalExpenses() {
         const { data: totalData } = await axios.get("/api/total-expenses");
         const { data: monthlyData } = await axios.get("/api/monthly-total");
         const formattedData = Object.entries(monthlyData).map(
-          ([month, amount]) => ({ month, amount })
+          ([month, amount]) => ({ month, amount: Number(amount) })
         );
         setTotalExpenses(totalData.totalExpenses || 0);
         setMonthlyExpenses(formattedData || []);
       } catch (error) {
+        console.log(error);
         toast.error("Failed to fetch expenses.");
       } finally {
         setLoading(false);

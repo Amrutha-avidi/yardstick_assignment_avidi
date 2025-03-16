@@ -14,8 +14,12 @@ const COLORS = [
   "#BFDBFE"  // Blue 200
 ];
 
+type ChartData = {
+  category: string;
+  totalAmount: number;
+};
 export default function CategoryChart() {
-  const [chartData, setChartData] = React.useState<any[]>([]);
+  const [chartData, setChartData] = React.useState<ChartData[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
@@ -24,6 +28,8 @@ export default function CategoryChart() {
         const { data } = await axios.get("/api/category-breakdown");
         setChartData(data || []);
       } catch (error) {
+        console.log(error)
+
         toast.error("Failed to fetch category breakdown.");
       } finally {
         setLoading(false);

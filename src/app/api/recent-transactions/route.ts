@@ -12,6 +12,8 @@ export async function GET() {
 
         return NextResponse.json(recentTransactions, { status: 200 });
     } catch (error) {
+        console.log(error)
+
         return NextResponse.json({ error: "Failed to fetch recent transactions." }, { status: 500 });
     }
 }

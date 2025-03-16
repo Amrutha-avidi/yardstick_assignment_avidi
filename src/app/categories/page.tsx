@@ -6,21 +6,8 @@ import CategoryBreakdown from "../components/CategoryBreakdown";
 import RecentTransactions from "../components/RecentTransactions";
 import CategoryChart from "../components/CategoryChart";
 
-const COLORS = [
-  "#4CAF50",
-  "#2196F3",
-  "#FF5722",
-  "#9C27B0",
-  "#FFC107",
-  "#03A9F4",
-  "#E91E63",
-];
 
-type Transaction = {
-  _id: string;
-  description: string;
-  amount: number;
-};
+
 
 export default function Dashboard() {
   return (

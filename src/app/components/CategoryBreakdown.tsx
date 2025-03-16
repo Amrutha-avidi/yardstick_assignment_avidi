@@ -19,6 +19,7 @@ export default function CategoryBreakdownCard() {
         const { data } = await axios.get("/api/category-breakdown");
         setCategoryData(data || []);
       } catch (error) {
+        console.log(error)
         toast.error("Failed to fetch category breakdown.");
       } finally {
         setLoading(false);
