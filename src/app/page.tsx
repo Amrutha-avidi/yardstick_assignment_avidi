@@ -102,6 +102,7 @@ const TransactionForm = () => {
       toast.success("Transaction deleted successfully!");
       fetchTransactions();
     } catch (error) {
+      console.log(error)
       toast.error("Failed to delete transaction.");
     }
   };
