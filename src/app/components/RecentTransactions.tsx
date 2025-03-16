@@ -4,8 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import axios from "axios";
 import { toast } from "sonner";
 
+type Transaction = {
+  _id: string;
+  description: string;
+  amount: number;
+};
+
 export default function RecentTransactions() {
-  const [recentTransactions, setRecentTransactions] = React.useState<any[]>([]);
+  const [recentTransactions, setRecentTransactions] = React.useState<Transaction[]>([]);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
