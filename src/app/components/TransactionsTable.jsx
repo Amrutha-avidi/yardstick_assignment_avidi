@@ -13,7 +13,6 @@ const TransactionsTable = ({ transactions, onEdit, onDelete }) => {
     }
     return (
         <div className="space-y-4">
-            <h2 className="text-xl font-bold">Transactions</h2>
             {transactions.length === 0 ? (
                 <p className="text-gray-500">No transactions yet.</p>
             ) : (

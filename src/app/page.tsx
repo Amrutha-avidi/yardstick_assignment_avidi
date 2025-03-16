@@ -35,17 +35,23 @@ const TransactionForm = () => {
   const [category, setCategory] = React.useState("Rent");
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
   const [editId, setEditId] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   const fetchTransactions = async () => {
+    setLoading(true);
     try {
       const { data } = await axios.get("/api/transactions");
       setTransactions(data.reverse());
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        toast.error(error.response.data.error || "Failed to fetch transactions.");
+        toast.error(
+          error.response.data.error || "Failed to fetch transactions."
+        );
       } else {
         toast.error("An unexpected error occurred.");
       }
+    } finally {
+      setLoading(false); // Stop Loading
     }
   };
 
@@ -102,7 +108,7 @@ const TransactionForm = () => {
       toast.success("Transaction deleted successfully!");
       fetchTransactions();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error("Failed to delete transaction.");
     }
   };
@@ -117,9 +123,11 @@ const TransactionForm = () => {
 
   return (
     <div className="flex flex-col justify-center items-center gap-7">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-15 p-4 w-full max-w-6xl">
         {/* Transaction Form */}
-        <div className="space-y-4">
+        <div className="space-y-4 w-full md:w-[400px] lg:w-[550px]">
+        <h2 className="text-2xl font-bold text-center mb-10">Your Recent Transactions</h2>
+
           <form
             onSubmit={handleSubmit}
             className="space-y-4 flex flex-col justify-center "
@@ -165,11 +173,19 @@ const TransactionForm = () => {
         </div>
 
         {/* Transactions List */}
-        <TransactionsTable
-          transactions={transactions}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
+        <div className="w-full md:w-[400px] lg:w-[650px]">
+          <h2 className="text-2xl font-bold text-center mb-10">Your Recent Transactions</h2>
+          {/* 🔒 Fixed Width */}
+          {loading ? (
+            <p className="text-center text-gray-500">Loading transactions...</p>
+          ) : (
+            <TransactionsTable
+              transactions={transactions}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          )}
+        </div>
       </div>
       <MonthlyChart />
     </div>
