@@ -18,18 +18,24 @@ import {
 
 import { toast } from "sonner";
 
+type MonthlyTotal = {
+  month: string;
+  total: number;
+};
+
 function MonthlyChart() {
-  const [monthlyTotal, setMonthlyTotal] = React.useState<any[]>([]);
+  const [monthlyTotal, setMonthlyTotal] = React.useState<MonthlyTotal[]>([]);
 
   const fetchMonthlyTotals = async () => {
     try {
       const { data } = await axios.get("/api/monthly-total");
       const formattedData = Object.entries(data).map(([month, total]) => ({
         month,
-        total,
+        total: Number(total),
       }));
       setMonthlyTotal(formattedData);
     } catch (error) {
+      console.error("Failed to fetch transactions:", error);
       toast.error("Failed to fetch transactions.");
     }
   };

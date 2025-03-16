@@ -10,6 +10,14 @@ import { toast } from "sonner";
 import TransactionsTable from "../app/components/TransactionsTable";
 import MonthlyChart from "./components/MonthlyChart";
 
+type Transaction = {
+  _id: string;
+  amount: number;
+  description: string;
+  date: string;
+  category: string;
+};
+
 const CATEGORIES = [
   "Rent",
   "Groceries",
@@ -25,7 +33,7 @@ const TransactionForm = () => {
   const [amount, setAmount] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [category, setCategory] = React.useState("Rent");
-  const [transactions, setTransactions] = React.useState<any[]>([]);
+  const [transactions, setTransactions] = React.useState<Transaction[]>([]);
   const [editId, setEditId] = React.useState<string | null>(null);
 
   const fetchTransactions = async () => {
@@ -33,7 +41,11 @@ const TransactionForm = () => {
       const { data } = await axios.get("/api/transactions");
       setTransactions(data.reverse());
     } catch (error) {
-      toast.error("Failed to fetch transactions.");
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(error.response.data.error || "Failed to fetch transactions.");
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
     }
   };
 
@@ -93,8 +105,9 @@ const TransactionForm = () => {
       toast.error("Failed to delete transaction.");
     }
   };
-  const handleEdit = (transaction: any) => {
-    setAmount(transaction.amount);
+
+  const handleEdit = (transaction: Transaction) => {
+    setAmount(transaction.amount.toString());
     setDescription(transaction.description);
     setCategory(transaction.category);
     setDate(new Date(transaction.date));
