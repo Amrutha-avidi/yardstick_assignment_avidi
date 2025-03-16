@@ -126,7 +126,7 @@ const TransactionForm = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-15 p-4 w-full max-w-6xl">
         {/* Transaction Form */}
         <div className="space-y-4 w-full md:w-[400px] lg:w-[550px]">
-        <h2 className="text-2xl font-bold text-center mb-10">Your Recent Transactions</h2>
+        <h2 className="text-2xl font-bold text-center mb-10">Add Transaction</h2>
 
           <form
             onSubmit={handleSubmit}

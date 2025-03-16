@@ -7,7 +7,7 @@ import { Trash2, Edit } from "lucide-react";
 
 const TransactionsTable = ({ transactions, onEdit, onDelete }) => {
     const formatDate = (date) => {
-        const dateReq = moment(date).format("MMM-YYYY"); // Format like Feb-2025, Mar-2025
+        const dateReq = moment(date).format("DD-MMM-YYYY"); // Format like Feb-2025, Mar-2025
         return dateReq
 
     }
