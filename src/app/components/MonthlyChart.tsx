@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import axios from "axios";
-import { Bar, BarChart, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { Bar, BarChart, XAxis, YAxis, ResponsiveContainer } from "recharts";
 
 import { Button } from "@/components/ui/button";
 import {
