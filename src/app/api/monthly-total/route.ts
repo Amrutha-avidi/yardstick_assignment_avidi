@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { connectDB, Transaction } from "../../lib/db";
+import { connectDB, Transaction } from "../../lib/transactionSchema";
 import moment from "moment"; 
 
 // GET - Retrieve monthly total expenses

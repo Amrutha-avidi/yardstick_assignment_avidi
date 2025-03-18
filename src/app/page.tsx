@@ -32,7 +32,7 @@ const TransactionForm = () => {
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [amount, setAmount] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [category, setCategory] = React.useState("Rent");
+  const [category, setCategory] = React.useState<string>("");
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
   const [editId, setEditId] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -159,13 +159,16 @@ const TransactionForm = () => {
               onChange={(e) => setCategory(e.target.value)}
               className="border rounded-md p-2 w-full bg-input/30 text-foreground"
             >
-              {CATEGORIES.map((cat) => (
+              <option value="" disabled>
+                Select Category
+              </option>
+              {CATEGORIES.map((category) => (
                 <option
-                  key={cat}
-                  value={cat}
+                  key={category}
+                  value={category}
                   className="p-2 bg-gray-700 text-white hover:bg-gray-600"
                 >
-                  {cat}
+                  {category}
                 </option>
               ))}
             </select>

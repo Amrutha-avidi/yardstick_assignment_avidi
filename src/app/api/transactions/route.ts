@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { connectDB, Transaction } from "../../lib/db";
+import { connectDB, Transaction } from "../../lib/transactionSchema";
 
 // POST - Create a new transaction
 export async function POST(req: Request) {
