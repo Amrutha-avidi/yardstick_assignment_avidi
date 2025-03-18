@@ -33,6 +33,7 @@ export default function ComparisonChart() {
         const { data } = await axios.get("/api/budgets");
         setData(data);
       } catch (error) {
+        console.log(error)
         toast.error("Failed to fetch budget vs actual data.");
       } finally {
         setLoading(false);

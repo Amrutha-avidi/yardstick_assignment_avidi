@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "sonner";
 
 export default function SpendingInsights() {
-  const [insights, setInsights] = React.useState<any>(null);
+  const [insights, setInsights] = React.useState<any[]>([]); 
   const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
@@ -32,6 +32,7 @@ export default function SpendingInsights() {
         });
         setInsights(enrichedInsights);
       } catch (error) {
+        console.log(error)
         toast.error("Failed to fetch spending insights.");
       } finally {
         setLoading(false);
@@ -49,7 +50,7 @@ export default function SpendingInsights() {
     <div className="p-6 shadow rounded">
       <h2 className="text-2xl font-bold text-center mb-4">💰 Spending Insights</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {insights.map((category: any) => (
+        {insights.map((category) => (
           <div
             key={category.category}
             className="flex items-center gap-4 p-3 border rounded-md shadow-sm "
