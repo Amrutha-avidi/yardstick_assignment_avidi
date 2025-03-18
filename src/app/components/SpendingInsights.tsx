@@ -4,15 +4,24 @@ import * as React from "react";
 import axios from "axios";
 import { toast } from "sonner";
 
+interface Insight {
+  category: string;
+  budget: number;
+  actual: number;
+  message: string;
+  status?: string;
+  difference?: number;
+}
+
 export default function SpendingInsights() {
-  const [insights, setInsights] = React.useState<any[]>([]); 
+  const [insights, setInsights] = React.useState<Insight[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     const fetchInsights = async () => {
       try {
-        const { data } = await axios.get("/api/budgets");
-        const enrichedInsights = data.map((item: any) => {
+        const { data }: { data: Insight[] } = await axios.get("/api/budgets");
+        const enrichedInsights = data.map((item) => {
           if (item.actual === 0) {
             return { ...item, message: `💙 Start spending on ${item.category}` };
           } else if (item.actual === item.budget) {
@@ -32,7 +41,6 @@ export default function SpendingInsights() {
         });
         setInsights(enrichedInsights);
       } catch (error) {
-        console.log(error)
         toast.error("Failed to fetch spending insights.");
       } finally {
         setLoading(false);
@@ -53,7 +61,7 @@ export default function SpendingInsights() {
         {insights.map((category) => (
           <div
             key={category.category}
-            className="flex items-center gap-4 p-3 border rounded-md shadow-sm "
+            className="flex items-center gap-4 p-3 border rounded-md shadow-sm bg-white"
           >
             <div className="flex-1">
               <p className="font-medium text-lg">{category.category}</p>
