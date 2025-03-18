@@ -41,6 +41,7 @@ export default function SpendingInsights() {
         });
         setInsights(enrichedInsights);
       } catch (error) {
+        console.log(error)
         toast.error("Failed to fetch spending insights.");
       } finally {
         setLoading(false);
@@ -61,7 +62,7 @@ export default function SpendingInsights() {
         {insights.map((category) => (
           <div
             key={category.category}
-            className="flex items-center gap-4 p-3 border rounded-md shadow-sm bg-white"
+            className="flex items-center gap-4 p-3 border rounded-md shadow-sm "
           >
             <div className="flex-1">
               <p className="font-medium text-lg">{category.category}</p>
