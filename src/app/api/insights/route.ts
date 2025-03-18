@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB, Budget } from "../../lib/budgetSchema";
 import {Transaction} from "../../lib/transactionSchema"; 
 
-export async function GET(req: Request) {
+export async function GET() {
     await connectDB();
 
     const now = new Date();

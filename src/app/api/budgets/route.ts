@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 
 // Fetch All Budgets differentiated by month,
 
-export async function GET(req: Request) {
+export async function GET() {
   await connectDB();
 
   // Determine the current month range
