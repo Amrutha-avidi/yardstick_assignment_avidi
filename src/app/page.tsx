@@ -28,6 +28,8 @@ const CATEGORIES = [
   "Investments",
 ];
 
+const ITEMS_PER_PAGE = 9;
+
 const TransactionForm = () => {
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [amount, setAmount] = React.useState("");
@@ -36,6 +38,9 @@ const TransactionForm = () => {
   const [transactions, setTransactions] = React.useState<Transaction[]>([]);
   const [editId, setEditId] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
+
+  // Pagination State
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const fetchTransactions = async () => {
     setLoading(true);
@@ -51,7 +56,7 @@ const TransactionForm = () => {
         toast.error("An unexpected error occurred.");
       }
     } finally {
-      setLoading(false); // Stop Loading
+      setLoading(false);
     }
   };
 
@@ -121,6 +126,13 @@ const TransactionForm = () => {
     setEditId(transaction._id);
   };
 
+  // Pagination Logic
+  const totalPages = Math.ceil(transactions.length / ITEMS_PER_PAGE);
+  const displayedTransactions = transactions.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
   return (
     <div className="flex flex-col justify-center items-center gap-7">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-15 p-4 w-full max-w-6xl">
@@ -182,15 +194,37 @@ const TransactionForm = () => {
           <h2 className="text-2xl font-bold text-center mb-10">
             Your Recent Transactions
           </h2>
-          {/* 🔒 Fixed Width */}
           {loading ? (
             <p className="text-center text-gray-500">Loading transactions...</p>
           ) : (
-            <TransactionsTable
-              transactions={transactions}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
+            <>
+              <TransactionsTable
+                transactions={displayedTransactions}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+
+              {/* Pagination Controls */}
+              <div className="flex justify-center gap-4 mt-4">
+                <Button
+                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </Button>
+                <span className="text-lg font-medium">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <Button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </Button>
+              </div>
+            </>
           )}
         </div>
       </div>
